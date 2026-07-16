@@ -1,6 +1,8 @@
 <?php
 
 use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\Auth\GuruAuthController;
+use App\Http\Controllers\GuruController;
 
 /*
 |--------------------------------------------------------------------------
@@ -14,5 +16,16 @@ use Illuminate\Support\Facades\Route;
 */
 
 Route::get('/', function () {
-    return view('welcome');
+    return redirect('/guru/login');
 });
+
+Route::get('/guru/login', [GuruAuthController::class, 'index'])
+    ->name('guru.login');
+
+Route::post('/guru/login', [GuruAuthController::class, 'authenticate'])
+    ->name('guru.authenticate');
+
+Route::post('/guru/logout', [GuruAuthController::class, 'logout'])
+    ->name('guru.logout');
+
+Route::get('/guru', [GuruController::class, 'index']);
