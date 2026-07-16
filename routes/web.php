@@ -52,6 +52,11 @@ Route::middleware('guru')->group(function () {
         [MapelController::class, 'importStore']
     )->name('mapel.import.store');
 
+    Route::get(
+        '/buku-nilai',
+        [GuruController::class, 'bukuNilai']
+    )->name('guru.nilai');
+
     Route::resource('mapel', MapelController::class);
 
     Route::get(

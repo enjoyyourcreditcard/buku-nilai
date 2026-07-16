@@ -24,6 +24,10 @@
             Mata Pelajaran
         </a>
 
+        <a href="{{ route('guru.nilai') }}">
+            Buku Nilai
+        </a>
+
     @endif
 
     @if(session()->has('siswa_id'))
