@@ -28,4 +28,8 @@ Route::post('/guru/login', [GuruAuthController::class, 'authenticate'])
 Route::post('/guru/logout', [GuruAuthController::class, 'logout'])
     ->name('guru.logout');
 
-Route::get('/guru', [GuruController::class, 'index']);
+Route::middleware('guru')->group(function () {
+
+    Route::get('/guru', [GuruController::class, 'index']);
+
+});
