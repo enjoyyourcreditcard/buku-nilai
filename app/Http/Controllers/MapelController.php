@@ -5,6 +5,8 @@ namespace App\Http\Controllers;
 use App\Models\Mapel;
 use App\Services\ImportNilaiService;
 use Illuminate\Http\Request;
+use PhpOffice\PhpSpreadsheet\Spreadsheet;
+use PhpOffice\PhpSpreadsheet\Writer\Xlsx;
 
 class MapelController extends Controller
 {
@@ -12,7 +14,7 @@ class MapelController extends Controller
     {
         $mapels = Mapel::where('guru_id', session('guru_id'))
             ->latest()
-            ->get();
+            ->paginate(10);
 
         return view('guru.mapel.index', compact('mapels'));
     }
@@ -126,5 +128,58 @@ class MapelController extends Controller
                 );
 
         }
+    }
+
+    public function downloadTemplate()
+    {
+        $spreadsheet = new Spreadsheet();
+
+        $petunjuk = $spreadsheet->createSheet();
+
+        $petunjuk->setTitle('Petunjuk');
+
+        $petunjuk->setCellValue('A1', 'Cara Mengisi');
+
+        $petunjuk->setCellValue('A2', '- Jangan mengubah header.');
+
+        $petunjuk->setCellValue('A3', '- Nilai harus antara 0-100.');
+
+        $petunjuk->setCellValue('A4', '- Nomor SPMB harus sesuai.');
+
+        $petunjuk->setCellValue('A5', '- Simpan file dalam format .xlsx.');
+
+        $sheet = $spreadsheet->getActiveSheet();
+
+        $sheet->getStyle('A1:D1')->getFont()->setBold(true);
+
+        $sheet->setCellValue('A1', 'nama');
+        $sheet->setCellValue('B1', 'jurusan');
+        $sheet->setCellValue('C1', 'nomor_spmb');
+        $sheet->setCellValue('D1', 'nilai');
+
+        // Contoh data
+        $sheet->setCellValue('A2', 'Andi');
+        $sheet->setCellValue('B2', 'RPL');
+        $sheet->setCellValue('C2', '240001');
+        $sheet->setCellValue('D2', '90');
+
+        foreach (range('A', 'D') as $column) {
+            $sheet
+                ->getColumnDimension($column)
+                ->setAutoSize(true);
+        }
+
+        $fileName = 'template_import_nilai.xlsx';
+
+        $writer = new Xlsx($spreadsheet);
+
+        $tempFile = tempnam(sys_get_temp_dir(), 'excel');
+
+        $writer->save($tempFile);
+
+        return response()->download(
+            $tempFile,
+            $fileName
+        )->deleteFileAfterSend(true);
     }
 }

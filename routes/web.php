@@ -19,6 +19,14 @@ use Illuminate\Support\Facades\Route;
 */
 
 Route::get('/', function () {
+    if (session()->has('guru_id')) {
+        return redirect('/guru');
+    }
+
+    if (session()->has('siswa_id')) {
+        return redirect('/siswa');
+    }
+
     return redirect('/guru/login');
 });
 
@@ -45,6 +53,11 @@ Route::middleware('guru')->group(function () {
     )->name('mapel.import.store');
 
     Route::resource('mapel', MapelController::class);
+
+    Route::get(
+        '/template/excel',
+        [MapelController::class, 'downloadTemplate']
+    )->name('template.excel');
 });
 
 Route::get('/siswa/login', [SiswaAuthController::class, 'index'])

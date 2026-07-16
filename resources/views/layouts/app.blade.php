@@ -14,6 +14,26 @@
         <b>Buku Nilai</b>
     </div>
 
+    @if(session()->has('guru_id'))
+
+        <a href="/guru">
+            Dashboard
+        </a>
+
+        <a href="/mapel">
+            Mata Pelajaran
+        </a>
+
+    @endif
+
+    @if(session()->has('siswa_id'))
+
+        <a href="/siswa">
+            Nilai Saya
+        </a>
+
+    @endif
+
     <div>
 
         {{ session('guru_nama') }}

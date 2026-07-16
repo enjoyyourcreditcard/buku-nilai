@@ -13,4 +13,13 @@
     <b>{{ session('guru_nama') }}</b>
 </p>
 
+Jumlah Mapel :
+{{ $jumlahMapel }}
+
+Jumlah Siswa :
+{{ $jumlahSiswa }}
+
+Jumlah Nilai :
+{{ $jumlahNilai }}
+
 @endsection

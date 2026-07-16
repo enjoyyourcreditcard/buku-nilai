@@ -79,4 +79,6 @@
 
 </table>
 
+{{ $mapels->links() }}
+
 @endsection

@@ -31,6 +31,11 @@ class GuruAuthController extends Controller
                 ->withInput();
         }
 
+        session()->forget([
+            'siswa_id',
+            'siswa_nama',
+        ]);
+
         session([
             'guru_id' => $guru->id,
             'guru_nama' => $guru->nama,

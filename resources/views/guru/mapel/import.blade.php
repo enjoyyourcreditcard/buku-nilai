@@ -33,6 +33,12 @@
 
 @endif
 
+<p>
+    <a href="{{ route('template.excel') }}">
+    Download Template Excel
+    </a>
+</p>
+
 <form
     action="{{ route('mapel.import.store',$mapel) }}"
     method="POST"
