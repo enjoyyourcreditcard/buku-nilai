@@ -3,6 +3,7 @@
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\Auth\GuruAuthController;
 use App\Http\Controllers\GuruController;
+use App\Http\Controllers\MapelController;
 
 /*
 |--------------------------------------------------------------------------
@@ -31,5 +32,7 @@ Route::post('/guru/logout', [GuruAuthController::class, 'logout'])
 Route::middleware('guru')->group(function () {
 
     Route::get('/guru', [GuruController::class, 'index']);
+
+    Route::resource('mapel', MapelController::class);
 
 });

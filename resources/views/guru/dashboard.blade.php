@@ -1,20 +1,16 @@
-<!DOCTYPE html>
-<html>
-<head>
-    <title>Dashboard Guru</title>
-</head>
-<body>
+@extends('layouts.app')
 
-<h2>Dashboard Guru</h2>
+@section('title','Dashboard')
 
-<p>Selamat datang, {{ session('guru_nama') }}</p>
+@section('content')
 
-<form action="{{ route('guru.logout') }}" method="POST">
-    @csrf
-    <button type="submit">
-        Logout
-    </button>
-</form>
+<h1 class="text-3xl font-bold">
+    Dashboard Guru
+</h1>
 
-</body>
-</html>
+<p class="mt-3">
+    Selamat datang,
+    <b>{{ session('guru_nama') }}</b>
+</p>
+
+@endsection
