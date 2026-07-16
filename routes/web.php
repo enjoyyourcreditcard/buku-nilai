@@ -1,9 +1,11 @@
 <?php
 
-use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\Auth\GuruAuthController;
+use App\Http\Controllers\Auth\SiswaAuthController;
 use App\Http\Controllers\GuruController;
 use App\Http\Controllers\MapelController;
+use App\Http\Controllers\SiswaController;
+use Illuminate\Support\Facades\Route;
 
 /*
 |--------------------------------------------------------------------------
@@ -30,7 +32,6 @@ Route::post('/guru/logout', [GuruAuthController::class, 'logout'])
     ->name('guru.logout');
 
 Route::middleware('guru')->group(function () {
-
     Route::get('/guru', [GuruController::class, 'index']);
 
     Route::get(
@@ -44,5 +45,19 @@ Route::middleware('guru')->group(function () {
     )->name('mapel.import.store');
 
     Route::resource('mapel', MapelController::class);
+});
 
+Route::get('/siswa/login', [SiswaAuthController::class, 'index'])
+    ->name('siswa.login');
+
+Route::post('/siswa/login', [SiswaAuthController::class, 'authenticate'])
+    ->name('siswa.authenticate');
+
+Route::post('/siswa/logout', [SiswaAuthController::class, 'logout'])
+    ->name('siswa.logout');
+
+Route::middleware('siswa')->group(function () {
+
+    Route::get('/siswa', [SiswaController::class, 'index']);
+    
 });
