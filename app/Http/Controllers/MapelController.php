@@ -103,13 +103,28 @@ class MapelController extends Controller
             ]
         ]);
 
-        $service->import(
-            $request->file('excel'),
-            $mapel
-        );
+        try {
 
-        return redirect()
-            ->route('mapel.index')
-            ->with('success', 'Nilai berhasil diimport.');
+            $service->import(
+                $request->file('excel'),
+                $mapel
+            );
+
+            return redirect()
+                ->route('mapel.index')
+                ->with(
+                    'success',
+                    'Import berhasil.'
+                );
+
+        } catch (\Exception $e) {
+
+            return back()
+                ->withInput()
+                ->withErrors(
+                    explode("\n", $e->getMessage())
+                );
+
+        }
     }
 }
