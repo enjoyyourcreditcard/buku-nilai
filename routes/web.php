@@ -33,6 +33,16 @@ Route::middleware('guru')->group(function () {
 
     Route::get('/guru', [GuruController::class, 'index']);
 
+    Route::get(
+        '/mapel/{mapel}/import',
+        [MapelController::class, 'importForm']
+    )->name('mapel.import');
+
+    Route::post(
+        '/mapel/{mapel}/import',
+        [MapelController::class, 'importStore']
+    )->name('mapel.import.store');
+
     Route::resource('mapel', MapelController::class);
 
 });

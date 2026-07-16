@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Mapel;
+use App\Services\ImportNilaiService;
 use Illuminate\Http\Request;
 
 class MapelController extends Controller
@@ -78,5 +79,37 @@ class MapelController extends Controller
             $mapel->guru_id != session('guru_id'),
             403
         );
+    }
+
+    public function importForm(Mapel $mapel)
+    {
+        $this->authorizeMapel($mapel);
+
+        return view(
+            'guru.mapel.import',
+            compact('mapel')
+        );
+    }
+
+    public function importStore(Request $request, Mapel $mapel, ImportNilaiService $service)
+    {
+        $this->authorizeMapel($mapel);
+
+        $request->validate([
+            'excel' => [
+                'required',
+                'file',
+                'mimes:xlsx,xls'
+            ]
+        ]);
+
+        $service->import(
+            $request->file('excel'),
+            $mapel
+        );
+
+        return redirect()
+            ->route('mapel.index')
+            ->with('success', 'Nilai berhasil diimport.');
     }
 }

@@ -57,6 +57,10 @@
 
                 </form>
 
+                <a href="{{ route('mapel.import',$mapel) }}">
+                    Import Nilai
+                </a>
+
             </td>
 
         </tr>
