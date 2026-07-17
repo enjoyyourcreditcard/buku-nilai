@@ -1,84 +1,132 @@
 @extends('layouts.app')
 
-@section('title', 'Mata Pelajaran')
+@section('title', 'Daftar Mata Pelajaran')
 
 @section('content')
 
-<h2>Daftar Mata Pelajaran</h2>
+<div class="card shadow-sm">
 
-@if(session('success'))
-    <p style="color:green">
-        {{ session('success') }}
-    </p>
-@endif
+    <div class="card-header d-flex justify-content-between align-items-center">
 
-<p>
-    <a href="{{ route('mapel.create') }}">
-        Tambah Mata Pelajaran
-    </a>
-</p>
+        <h5 class="mb-0">
+            Daftar Mata Pelajaran
+        </h5>
 
-<table border="1" cellpadding="8">
+        <a
+            href="{{ route('mapel.create') }}"
+            class="btn btn-primary btn-sm"
+        >
+            + Tambah Mapel
+        </a>
 
-    <tr>
-        <th>No</th>
-        <th>Nama</th>
-        <th>Aksi</th>
-    </tr>
+    </div>
 
-    @forelse($mapels as $mapel)
+    <div class="card-body">
 
-        <tr>
+        @if($mapels->isEmpty())
 
-            <td>{{ $loop->iteration }}</td>
-
-            <td>{{ $mapel->nama }}</td>
-
-            <td>
-
-                <a href="{{ route('mapel.edit',$mapel) }}">
-                    Edit
-                </a>
-
-                <form
-                    action="{{ route('mapel.destroy',$mapel) }}"
-                    method="POST"
-                    style="display:inline"
-                >
-
-                    @csrf
-                    @method('DELETE')
-
-                    <button
-                        onclick="return confirm('Hapus?')"
-                    >
-                        Hapus
-                    </button>
-
-                </form>
-
-                <a href="{{ route('mapel.import',$mapel) }}">
-                    Import Nilai
-                </a>
-
-            </td>
-
-        </tr>
-
-    @empty
-
-        <tr>
-
-            <td colspan="3">
+            <div class="alert alert-info mb-0">
                 Belum ada mata pelajaran.
-            </td>
+            </div>
 
-        </tr>
+        @else
 
-    @endforelse
+            <div class="table-responsive">
 
-</table>
+                <table class="table table-striped table-hover align-middle">
 
-{{ $mapels->links() }}
+                    <thead class="table-dark">
+
+                        <tr>
+
+                            <th width="70">No</th>
+
+                            <th>Nama Mapel</th>
+
+                            <th width="250">Aksi</th>
+
+                        </tr>
+
+                    </thead>
+
+                    <tbody>
+
+                        @foreach($mapels as $mapel)
+
+                        <tr>
+
+                            <td>
+
+                                {{ $mapels->firstItem() + $loop->index }}
+
+                            </td>
+
+                            <td>
+
+                                {{ $mapel->nama }}
+
+                            </td>
+
+                            <td>
+
+                                <a
+                                    href="{{ route('mapel.import', $mapel) }}"
+                                    class="btn btn-success btn-sm"
+                                >
+                                    <i class="bi bi-upload"></i>
+                                    Import Nilai
+                                </a>
+
+                                <a
+                                    href="{{ route('mapel.edit', $mapel) }}"
+                                    class="btn btn-warning btn-sm"
+                                >
+                                    <i class="bi bi-pencil"></i>
+                                    Edit
+                                </a>
+
+                                <form
+                                    action="{{ route('mapel.destroy', $mapel) }}"
+                                    method="POST"
+                                    class="d-inline"
+                                    onsubmit="return confirm('Yakin ingin menghapus mata pelajaran ini?')"
+                                >
+
+                                    @csrf
+                                    @method('DELETE')
+
+                                    <button
+                                        type="submit"
+                                        class="btn btn-danger btn-sm"
+                                    >
+                                        <i class="bi bi-trash"></i>
+                                        Hapus
+                                    </button>
+
+                                </form>
+
+                            </td>
+
+                        </tr>
+
+                        @endforeach
+
+                    </tbody>
+
+                </table>
+
+            </div>
+
+            <div class="mt-3">
+
+                {{ $mapels->links() }}
+
+            </div>
+
+        @endif
+
+    </div>
+
+</div>
 
 @endsection

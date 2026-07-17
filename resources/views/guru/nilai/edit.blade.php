@@ -1,46 +1,162 @@
 @extends('layouts.app')
 
+@section('title', 'Edit Nilai')
+
 @section('content')
 
-<h2>Edit Nilai</h2>
+<div class="row justify-content-center">
 
-<p>
+    <div class="col-md-6">
 
-Nama :
-<b>{{ $nilai->siswa->nama }}</b>
+        <div class="card shadow-sm">
 
-</p>
+            <div class="card-header d-flex justify-content-between align-items-center">
 
-<p>
+                <h5 class="mb-0">
+                    Edit Nilai
+                </h5>
 
-Mapel :
-<b>{{ $nilai->mapel->nama }}</b>
+                <a
+                    href="{{ route('guru.nilai') }}"
+                    class="btn btn-secondary btn-sm"
+                >
+                    Kembali
+                </a>
 
-</p>
+            </div>
 
-<form
-    method="POST"
-    action="{{ route('nilai.update', $nilai) }}"
->
+            <div class="card-body">
 
-    @csrf
+                @if($errors->any())
 
-    @method('PUT')
+                    <div class="alert alert-danger">
 
-    <input
-        type="number"
-        name="nilai"
-        min="0"
-        max="100"
-        value="{{ old('nilai', $nilai->nilai) }}"
-    >
+                        <ul class="mb-0">
 
-    <button>
+                            @foreach($errors->all() as $error)
 
-        Simpan
+                                <li>{{ $error }}</li>
 
-    </button>
+                            @endforeach
 
-</form>
+                        </ul>
+
+                    </div>
+
+                @endif
+
+                <div class="mb-3">
+
+                    <label class="form-label">
+
+                        Nama Siswa
+
+                    </label>
+
+                    <input
+                        type="text"
+                        class="form-control"
+                        value="{{ $nilai->siswa->nama }}"
+                        readonly
+                    >
+
+                </div>
+
+                <div class="mb-3">
+
+                    <label class="form-label">
+
+                        Jurusan
+
+                    </label>
+
+                    <input
+                        type="text"
+                        class="form-control"
+                        value="{{ $nilai->siswa->jurusan }}"
+                        readonly
+                    >
+
+                </div>
+
+                <div class="mb-3">
+
+                    <label class="form-label">
+
+                        Nomor SPMB
+
+                    </label>
+
+                    <input
+                        type="text"
+                        class="form-control"
+                        value="{{ $nilai->siswa->nomor_spmb }}"
+                        readonly
+                    >
+
+                </div>
+
+                <div class="mb-3">
+
+                    <label class="form-label">
+
+                        Mata Pelajaran
+
+                    </label>
+
+                    <input
+                        type="text"
+                        class="form-control"
+                        value="{{ $nilai->mapel->nama }}"
+                        readonly
+                    >
+
+                </div>
+
+                <form
+                    action="{{ route('nilai.update', $nilai) }}"
+                    method="POST"
+                >
+
+                    @csrf
+
+                    @method('PUT')
+
+                    <div class="mb-3">
+
+                        <label class="form-label">
+
+                            Nilai
+
+                        </label>
+
+                        <input
+                            type="number"
+                            name="nilai"
+                            class="form-control"
+                            min="0"
+                            max="100"
+                            value="{{ old('nilai', $nilai->nilai) }}"
+                            required
+                        >
+
+                    </div>
+
+                    <button
+                        type="submit"
+                        class="btn btn-primary"
+                    >
+                        Simpan Perubahan
+                    </button>
+
+                </form>
+
+            </div>
+
+        </div>
+
+    </div>
+
+</div>
 
 @endsection

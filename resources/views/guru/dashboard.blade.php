@@ -1,25 +1,71 @@
 @extends('layouts.app')
 
-@section('title','Dashboard')
+@section('title', 'Dashboard Guru')
 
 @section('content')
 
-<h1 class="text-3xl font-bold">
-    Dashboard Guru
-</h1>
+<div class="card">
 
-<p class="mt-3">
-    Selamat datang,
-    <b>{{ session('guru_nama') }}</b>
-</p>
+    <div class="card-header">
+        Dashboard Guru
+    </div>
 
-Jumlah Mapel :
-{{ $jumlahMapel }}
+    <div class="card-body">
 
-Jumlah Siswa :
-{{ $jumlahSiswa }}
+        <div class="row">
 
-Jumlah Nilai :
-{{ $jumlahNilai }}
+            <div class="col-md-4">
+
+                <div class="card text-center">
+
+                    <div class="card-body">
+
+                        <h5>Total Mapel</h5>
+
+                        <h2>{{ $jumlahMapel }}</h2>
+
+                    </div>
+
+                </div>
+
+            </div>
+
+            <div class="col-md-4">
+
+                <div class="card text-center">
+
+                    <div class="card-body">
+
+                        <h5>Total Siswa</h5>
+
+                        <h2>{{ $jumlahSiswa }}</h2>
+
+                    </div>
+
+                </div>
+
+            </div>
+
+            <div class="col-md-4">
+
+                <div class="card text-center">
+
+                    <div class="card-body">
+
+                        <h5>Total Nilai</h5>
+
+                        <h2>{{ $jumlahNilai }}</h2>
+
+                    </div>
+
+                </div>
+
+            </div>
+
+        </div>
+
+    </div>
+
+</div>
 
 @endsection

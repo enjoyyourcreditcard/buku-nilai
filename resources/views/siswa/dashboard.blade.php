@@ -1,67 +1,145 @@
 @extends('layouts.app')
 
-@section('title','Dashboard Siswa')
+@section('title', 'Dashboard Siswa')
 
 @section('content')
 
-<h2>
+<div class="card mb-4">
 
-Halo, {{ session('siswa_nama') }}
+    <div class="card-header">
 
-</h2>
+        Dashboard Siswa
 
-<table border="1" cellpadding="8">
+    </div>
 
-<tr>
+    <div class="card-body">
 
-<th>No</th>
+        <h4>
 
-<th>Mata Pelajaran</th>
+            Halo, {{ session('siswa_nama') }} 👋
 
-<th>Nilai</th>
+        </h4>
 
-</tr>
+        <p class="text-muted mb-0">
 
-@forelse($nilais as $nilai)
+            Selamat datang di aplikasi Buku Nilai.
 
-<tr>
+        </p>
 
-<td>{{ $loop->iteration }}</td>
+    </div>
 
-<td>{{ $nilai->mapel->nama }}</td>
+</div>
 
-<td>{{ $nilai->nilai }}</td>
 
-</tr>
+<div class="row mb-4">
 
-@empty
+    <div class="col-md-4">
 
-<tr>
+        <div class="card text-center">
 
-<td colspan="3">
+            <div class="card-body">
 
-Belum ada nilai.
+                <h6 class="text-muted">
 
-</td>
+                    Jumlah Mata Pelajaran
 
-</tr>
+                </h6>
 
-@endforelse
+                <h2>
 
-</table>
+                    {{ $jumlahMapel }}
 
-<form
-    action="{{ route('siswa.logout') }}"
-    method="POST"
->
-    @csrf
+                </h2>
 
-    <button>
+            </div>
 
-        Logout
+        </div>
 
-    </button>
+    </div>
 
-</form>
+</div>
+
+
+<div class="card">
+
+    <div class="card-header">
+
+        Nilai Saya
+
+    </div>
+
+    <div class="card-body">
+
+        @if($nilais->isEmpty())
+
+            <div class="alert alert-warning">
+
+                Belum ada nilai.
+
+            </div>
+
+        @else
+
+            <div class="table-responsive">
+
+                <table class="table table-striped table-hover align-middle">
+
+                    <thead>
+
+                        <tr>
+
+                            <th>No</th>
+
+                            <th>Mata Pelajaran</th>
+
+                            <th>Nilai</th>
+
+                        </tr>
+
+                    </thead>
+
+                    <tbody>
+
+                    @foreach($nilais as $nilai)
+
+                        <tr>
+
+                            <td>
+
+                                {{ $loop->iteration }}
+
+                            </td>
+
+                            <td>
+
+                                {{ $nilai->mapel->nama }}
+
+                            </td>
+
+                            <td>
+
+                                <span class="badge bg-primary">
+
+                                    {{ $nilai->nilai }}
+
+                                </span>
+
+                            </td>
+
+                        </tr>
+
+                    @endforeach
+
+                    </tbody>
+
+                </table>
+
+            </div>
+
+        @endif
+
+    </div>
+
+</div>
 
 @endsection

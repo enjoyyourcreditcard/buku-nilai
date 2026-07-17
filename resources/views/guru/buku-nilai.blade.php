@@ -4,119 +4,224 @@
 
 @section('content')
 
-<h2>Buku Nilai</h2>
+<div class="card">
 
-<form method="GET">
+    <div class="card-header d-flex justify-content-between align-items-center">
 
-    <input
-        type="text"
-        name="nama"
-        placeholder="Cari Nama"
-        value="{{ request('nama') }}"
-    >
+        <h5 class="mb-0">
+            Buku Nilai
+        </h5>
 
-    <input
-        type="text"
-        name="nomor_spmb"
-        placeholder="Nomor SPMB"
-        value="{{ request('nomor_spmb') }}"
-    >
+    </div>
 
-    <select name="jurusan">
+    <div class="card-body">
 
-        <option value="">
-            Semua Jurusan
-        </option>
+        {{-- Form Pencarian --}}
+        <form method="GET">
 
-        @foreach($jurusans as $jurusan)
+            <div class="row g-3 mb-4">
 
-            <option
-                value="{{ $jurusan }}"
-                @selected(request('jurusan') == $jurusan)
-            >
-                {{ $jurusan }}
-            </option>
+                <div class="col-md-4">
 
-        @endforeach
-
-    </select>
-
-    <button type="submit">
-        Cari
-    </button>
-
-    <a href="{{ route('guru.nilai') }}">
-        Reset
-    </a>
-
-</form>
-
-<br>
-
-@if($siswas->isEmpty())
-
-    <p>Belum ada data nilai.</p>
-
-@else
-
-<table border="1" cellpadding="8" cellspacing="0">
-    <thead>
-        <tr>
-            <th>No</th>
-            <th>Nama</th>
-            <th>Jurusan</th>
-            <th>Nomor SPMB</th>
-            @foreach($mapels as $mapel)
-
-                <th>{{ $mapel->nama }}</th>
-
-            @endforeach
-        </tr>
-    </thead>
-
-    <tbody>
-    @foreach($siswas as $siswa)
-        <tr>
-            <td>{{ $siswas->firstItem() + $loop->index }}</td>
-            <td>{{ $siswa->nama }}</td>
-            <td>{{ $siswa->jurusan }}</td>
-            <td>{{ $siswa->nomor_spmb }}</td>
-            @foreach($mapels as $mapel)
-
-                <td>
-                    @if(isset($siswa->nilaiMapel[$mapel->id]))
-
-                    <a
-                        href="{{ route(
-                            'nilai.edit',
-                            $siswa->nilaiMapel[$mapel->id]
-                        ) }}"
+                    <input
+                        type="text"
+                        name="nama"
+                        class="form-control"
+                        placeholder="Cari Nama..."
+                        value="{{ request('nama') }}"
                     >
 
-                    {{ $siswa->nilaiMapel[$mapel->id]->nilai }}
+                </div>
+
+                <div class="col-md-3">
+
+                    <input
+                        type="text"
+                        name="nomor_spmb"
+                        class="form-control"
+                        placeholder="Nomor SPMB"
+                        value="{{ request('nomor_spmb') }}"
+                    >
+
+                </div>
+
+                <div class="col-md-3">
+
+                    <select
+                        name="jurusan"
+                        class="form-select"
+                    >
+
+                        <option value="">
+                            Semua Jurusan
+                        </option>
+
+                        @foreach($jurusans as $jurusan)
+
+                            <option
+                                value="{{ $jurusan }}"
+                                @selected(request('jurusan') == $jurusan)
+                            >
+
+                                {{ $jurusan }}
+
+                            </option>
+
+                        @endforeach
+
+                    </select>
+
+                </div>
+
+                <div class="col-md-1 d-grid">
+
+                    <button
+                        class="btn btn-primary"
+                    >
+
+                        Cari
+
+                    </button>
+
+                </div>
+
+                <div class="col-md-1 d-grid">
+
+                    <a
+                        href="{{ route('guru.nilai') }}"
+                        class="btn btn-secondary"
+                    >
+
+                        Reset
 
                     </a>
 
-                    @else
+                </div>
 
-                    -
+            </div>
 
-                    @endif
-                </td>
+        </form>
 
-            @endforeach
+        @if($siswas->isEmpty())
 
-        </tr>
+            <div class="alert alert-warning">
 
-    @endforeach
+                Tidak ada data.
 
-    </tbody>
-</table>
+            </div>
 
-<div style="margin-top:20px;">
-    {{ $siswas->links() }}
+        @else
+
+            <div class="table-responsive">
+
+                <table class="table table-bordered table-hover align-middle">
+
+                    <thead class="table-dark">
+
+                        <tr>
+
+                            <th>No</th>
+
+                            <th>Nama</th>
+
+                            <th>Jurusan</th>
+
+                            <th>Nomor SPMB</th>
+
+                            @foreach($mapels as $mapel)
+
+                                <th>
+
+                                    {{ $mapel->nama }}
+
+                                </th>
+
+                            @endforeach
+
+                        </tr>
+
+                    </thead>
+
+                    <tbody>
+
+                    @foreach($siswas as $siswa)
+
+                        <tr>
+
+                            <td>
+
+                                {{ $siswas->firstItem() + $loop->index }}
+
+                            </td>
+
+                            <td>
+
+                                {{ $siswa->nama }}
+
+                            </td>
+
+                            <td>
+
+                                <span class="badge bg-primary">
+
+                                {{ $siswa->jurusan }}
+
+                                </span>
+
+                            </td>
+
+                            <td>
+
+                                {{ $siswa->nomor_spmb }}
+
+                            </td>
+
+                            @foreach($mapels as $mapel)
+
+                                <td class="text-center">
+
+                                    @if(isset($siswa->nilaiMapel[$mapel->id]))
+
+                                        <a
+                                            href="{{ route('nilai.edit', $siswa->nilaiMapel[$mapel->id]) }}"
+                                            class="fw-bold text-decoration-none"
+                                            title="Edit Nilai"
+                                        >
+
+                                            {{ $siswa->nilaiMapel[$mapel->id]->nilai }}
+
+                                        </a>
+
+                                    @else
+
+                                        -
+
+                                    @endif
+
+                                </td>
+
+                            @endforeach
+
+                        </tr>
+
+                    @endforeach
+
+                    </tbody>
+
+                </table>
+
+            </div>
+
+            <div class="mt-3">
+
+                {{ $siswas->links() }}
+
+            </div>
+
+        @endif
+
+    </div>
+
 </div>
-
-@endif
 
 @endsection

@@ -1,68 +1,38 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="id">
+
 <head>
-    <meta charset="UTF-8">
-    <title>@yield('title')</title>
 
-    <script src="https://cdn.jsdelivr.net/npm/@tailwindcss/browser@4"></script>
+<meta charset="UTF-8">
+
+<meta name="viewport"
+      content="width=device-width, initial-scale=1">
+
+<title>
+
+@yield('title')
+
+</title>
+
+@vite([
+'resources/css/app.css',
+'resources/js/app.js'
+])
+
 </head>
-<body class="bg-gray-100">
 
-<nav class="bg-blue-700 text-white p-4 flex justify-between">
+<body>
 
-    <div>
-        <b>Buku Nilai</b>
-    </div>
+@include('layouts.navbar')
 
-    @if(session()->has('guru_id'))
+<div class="container py-4">
 
-        <a href="/guru">
-            Dashboard
-        </a>
+@include('layouts.alert')
 
-        <a href="/mapel">
-            Mata Pelajaran
-        </a>
-
-        <a href="{{ route('guru.nilai') }}">
-            Buku Nilai
-        </a>
-
-    @endif
-
-    @if(session()->has('siswa_id'))
-
-        <a href="/siswa">
-            Nilai Saya
-        </a>
-
-    @endif
-
-    <div>
-
-        {{ session('guru_nama') }}
-
-        <form action="{{ route('guru.logout') }}"
-              method="POST"
-              style="display:inline">
-
-            @csrf
-
-            <button>
-                Logout
-            </button>
-
-        </form>
-
-    </div>
-
-</nav>
-
-<div class="max-w-6xl mx-auto mt-6">
-
-    @yield('content')
+@yield('content')
 
 </div>
 
 </body>
+
 </html>

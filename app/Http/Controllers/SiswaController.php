@@ -10,11 +10,17 @@ class SiswaController extends Controller
     {
         $nilais = Nilai::with('mapel')
             ->where('siswa_id', session('siswa_id'))
+            ->orderBy('mapel_id')
             ->get();
+
+        $jumlahMapel = $nilais->count();
 
         return view(
             'siswa.dashboard',
-            compact('nilais')
+            compact(
+                'nilais',
+                'jumlahMapel'
+            )
         );
     }
 }
