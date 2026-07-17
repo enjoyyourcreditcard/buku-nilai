@@ -64,11 +64,6 @@ class ImportNilaiService
                     continue;
                 }
 
-                if (!ctype_digit($nomorSpmb)) {
-                    $errors[] = "Baris ".($index+1).": Nomor SPMB harus berupa angka.";
-                    continue;
-                }
-
                 if ($jurusan == '') {
                     $errors[] = "Baris ".($index+1).": Jurusan kosong.";
                     continue;

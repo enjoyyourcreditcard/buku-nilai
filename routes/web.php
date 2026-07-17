@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\Auth\GuruAuthController;
 use App\Http\Controllers\Auth\SiswaAuthController;
+use App\Http\Controllers\Guru\GuruSiswaController;
 use App\Http\Controllers\GuruController;
 use App\Http\Controllers\MapelController;
 use App\Http\Controllers\NilaiController;
@@ -67,6 +68,11 @@ Route::middleware('guru')->group(function () {
         '/buku-nilai',
         [GuruController::class, 'bukuNilai']
     )->name('guru.nilai');
+
+    Route::delete(
+        '/buku-nilai/{siswa}',
+        [GuruSiswaController::class, 'destroy']
+    )->name('guru.siswa.destroy');
 
     Route::resource('mapel', MapelController::class);
 

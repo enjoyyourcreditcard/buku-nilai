@@ -138,6 +138,8 @@
 
                             @endforeach
 
+                            <th>Aksi</th>
+
                         </tr>
 
                     </thead>
@@ -201,6 +203,28 @@
                                 </td>
 
                             @endforeach
+
+                            <td>
+
+                            <form
+                                action="{{ route('guru.siswa.destroy', $siswa) }}"
+                                method="POST"
+                                onsubmit="return confirm('Yakin ingin menghapus siswa beserta seluruh nilainya?')"
+                            >
+
+                                @csrf
+
+                                @method('DELETE')
+
+                                <button
+                                    class="btn btn-danger btn-sm"
+                                >
+                                    Hapus
+                                </button>
+
+                            </form>
+
+                            </td>
 
                         </tr>
 
