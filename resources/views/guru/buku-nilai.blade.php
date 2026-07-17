@@ -84,7 +84,24 @@
             @foreach($mapels as $mapel)
 
                 <td>
-                    {{ $siswa->nilaiMapel[$mapel->id]->nilai ?? '-' }}
+                    @if(isset($siswa->nilaiMapel[$mapel->id]))
+
+                    <a
+                        href="{{ route(
+                            'nilai.edit',
+                            $siswa->nilaiMapel[$mapel->id]
+                        ) }}"
+                    >
+
+                    {{ $siswa->nilaiMapel[$mapel->id]->nilai }}
+
+                    </a>
+
+                    @else
+
+                    -
+
+                    @endif
                 </td>
 
             @endforeach

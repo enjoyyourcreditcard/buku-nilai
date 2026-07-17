@@ -4,6 +4,7 @@ use App\Http\Controllers\Auth\GuruAuthController;
 use App\Http\Controllers\Auth\SiswaAuthController;
 use App\Http\Controllers\GuruController;
 use App\Http\Controllers\MapelController;
+use App\Http\Controllers\NilaiController;
 use App\Http\Controllers\SiswaController;
 use Illuminate\Support\Facades\Route;
 
@@ -41,6 +42,16 @@ Route::post('/guru/logout', [GuruAuthController::class, 'logout'])
 
 Route::middleware('guru')->group(function () {
     Route::get('/guru', [GuruController::class, 'index']);
+
+    Route::get(
+        '/nilai/{nilai}/edit',
+        [NilaiController::class, 'edit']
+    )->name('nilai.edit');
+
+    Route::put(
+        '/nilai/{nilai}',
+        [NilaiController::class, 'update']
+    )->name('nilai.update');
 
     Route::get(
         '/mapel/{mapel}/import',
