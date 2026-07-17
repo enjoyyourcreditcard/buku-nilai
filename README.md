@@ -1,66 +1,152 @@
-<p align="center"><a href="https://laravel.com" target="_blank"><img src="https://raw.githubusercontent.com/laravel/art/master/logo-lockup/5%20SVG/2%20CMYK/1%20Full%20Color/laravel-logolockup-cmyk-red.svg" width="400" alt="Laravel Logo"></a></p>
+# 📚 Buku Nilai Siswa
 
-<p align="center">
-<a href="https://github.com/laravel/framework/actions"><img src="https://github.com/laravel/framework/workflows/tests/badge.svg" alt="Build Status"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/dt/laravel/framework" alt="Total Downloads"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/v/laravel/framework" alt="Latest Stable Version"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/l/laravel/framework" alt="License"></a>
-</p>
+Aplikasi sederhana berbasis **Laravel 10** dan **PostgreSQL** untuk mengelola nilai siswa.
 
-## About Laravel
+Project ini memiliki dua role:
 
-Laravel is a web application framework with expressive, elegant syntax. We believe development must be an enjoyable and creative experience to be truly fulfilling. Laravel takes the pain out of development by easing common tasks used in many web projects, such as:
+- 👨‍🏫 Guru
+- 👨‍🎓 Siswa
 
-- [Simple, fast routing engine](https://laravel.com/docs/routing).
-- [Powerful dependency injection container](https://laravel.com/docs/container).
-- Multiple back-ends for [session](https://laravel.com/docs/session) and [cache](https://laravel.com/docs/cache) storage.
-- Expressive, intuitive [database ORM](https://laravel.com/docs/eloquent).
-- Database agnostic [schema migrations](https://laravel.com/docs/migrations).
-- [Robust background job processing](https://laravel.com/docs/queues).
-- [Real-time event broadcasting](https://laravel.com/docs/broadcasting).
+Guru dapat membuat mata pelajaran, mengimpor nilai melalui file Excel, melihat seluruh nilai siswa, serta mengubah nilai secara manual.
 
-Laravel is accessible, powerful, and provides tools required for large, robust applications.
+Siswa hanya dapat melihat seluruh nilai miliknya sendiri.
 
-## Learning Laravel
+---
 
-Laravel has the most extensive and thorough [documentation](https://laravel.com/docs) and video tutorial library of all modern web application frameworks, making it a breeze to get started with the framework.
+# ✨ Fitur
 
-You may also try the [Laravel Bootcamp](https://bootcamp.laravel.com), where you will be guided through building a modern Laravel application from scratch.
+## Guru
 
-If you don't feel like reading, [Laracasts](https://laracasts.com) can help. Laracasts contains thousands of video tutorials on a range of topics including Laravel, modern PHP, unit testing, and JavaScript. Boost your skills by digging into our comprehensive video library.
+- Login Guru
+- Dashboard
+- CRUD Mata Pelajaran
+- Import Nilai dari Excel (.xlsx)
+- Download Template Excel
+- Validasi File Excel
+- Buku Nilai
+- Pencarian Siswa
+- Pagination
+- Edit Nilai Manual
 
-## Laravel Sponsors
+## Siswa
 
-We would like to extend our thanks to the following sponsors for funding Laravel development. If you are interested in becoming a sponsor, please visit the [Laravel Partners program](https://partners.laravel.com).
+- Login menggunakan Nama + Nomor SPMB
+- Dashboard
+- Melihat seluruh nilai
 
-### Premium Partners
+---
 
-- **[Vehikl](https://vehikl.com/)**
-- **[Tighten Co.](https://tighten.co)**
-- **[WebReinvent](https://webreinvent.com/)**
-- **[Kirschbaum Development Group](https://kirschbaumdevelopment.com)**
-- **[64 Robots](https://64robots.com)**
-- **[Curotec](https://www.curotec.com/services/technologies/laravel/)**
-- **[Cyber-Duck](https://cyber-duck.co.uk)**
-- **[DevSquad](https://devsquad.com/hire-laravel-developers)**
-- **[Jump24](https://jump24.co.uk)**
-- **[Redberry](https://redberry.international/laravel/)**
-- **[Active Logic](https://activelogic.com)**
-- **[byte5](https://byte5.de)**
-- **[OP.GG](https://op.gg)**
+# 🛠️ Tech Stack
 
-## Contributing
+- Laravel 10
+- PHP 8.3+
+- PostgreSQL
+- Bootstrap 5
+- PhpSpreadsheet
 
-Thank you for considering contributing to the Laravel framework! The contribution guide can be found in the [Laravel documentation](https://laravel.com/docs/contributions).
+---
 
-## Code of Conduct
+# 📦 Instalasi
 
-In order to ensure that the Laravel community is welcoming to all, please review and abide by the [Code of Conduct](https://laravel.com/docs/contributions#code-of-conduct).
+Clone repository
 
-## Security Vulnerabilities
+```bash
+git clone https://github.com/USERNAME/NAMA_REPOSITORY.git
+```
 
-If you discover a security vulnerability within Laravel, please send an e-mail to Taylor Otwell via [taylor@laravel.com](mailto:taylor@laravel.com). All security vulnerabilities will be promptly addressed.
+Masuk ke folder project
 
-## License
+```bash
+cd NAMA_REPOSITORY
+```
 
-The Laravel framework is open-sourced software licensed under the [MIT license](https://opensource.org/licenses/MIT).
+Install dependency
+
+```bash
+composer install
+```
+
+Install dependency frontend
+
+```bash
+npm install
+```
+
+Copy file environment
+
+```bash
+cp .env.example .env
+```
+
+Generate application key
+
+```bash
+php artisan key:generate
+```
+
+---
+
+# ⚙️ Konfigurasi Database
+
+Edit file **.env**
+
+Contoh menggunakan PostgreSQL
+
+```env
+DB_CONNECTION=pgsql
+DB_HOST=127.0.0.1
+DB_PORT=5432
+DB_DATABASE=db_buku_nilai
+DB_USERNAME=postgres
+DB_PASSWORD=password
+```
+
+---
+
+# 🗄️ Migrasi Database
+
+```bash
+php artisan migrate
+```
+
+---
+
+# 👨‍🏫 Membuat Akun Guru
+
+Karena aplikasi tidak memiliki fitur registrasi guru, buat akun melalui Tinker.
+
+```bash
+php artisan tinker
+```
+
+Kemudian jalankan
+
+```php
+\App\Models\Guru::create([
+    'nama' => 'admin',
+    'password' => bcrypt('password')
+]);
+```
+
+Login menggunakan
+
+```
+Nama     : admin
+Password : password
+```
+
+---
+
+# 🚀 Menjalankan Project
+
+Backend
+
+```bash
+php artisan serve
+```
+
+Frontend
+
+```bash
+npm run dev
+```
